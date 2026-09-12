@@ -1,99 +1,784 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <meta name="theme-color" content="#10151c">
-  <title>Thi Sa Hình Ô Tô - MT & AT</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Thi Sát Hình Ô Tô</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <main id="app">
-    <section id="menu" class="screen active">
-      <div class="brand">🚗 THI SA HÌNH Ô TÔ</div>
-      <p class="sub">Mô phỏng luyện tập MT & AT • Bản 1</p>
-      <div class="car-select">
-        <button class="car-card" data-mode="MT">
-          <span class="car-icon">🚘</span>
-          <b>SỐ SÀN (MT)</b>
-          <small>Côn • Phanh • Ga • 1-5 • R</small>
+
+  <!-- =====================================================
+       MÀN HÌNH MENU
+  ====================================================== -->
+  <div id="menuScreen" class="screen">
+
+    <div class="menu-bg"></div>
+
+    <div class="menu-card">
+
+      <div class="brand">
+        <div class="brand-icon">🚘</div>
+
+        <div>
+          <div class="brand-small">MÔ PHỎNG ĐÀO TẠO</div>
+          <h1>THI SÁT HÌNH Ô TÔ</h1>
+        </div>
+      </div>
+
+      <p class="menu-description">
+        Luyện tập lái xe trong môi trường mô phỏng
+        với góc nhìn từ ghế lái.
+      </p>
+
+      <!-- Loại xe -->
+      <div class="section-title">CHỌN LOẠI XE</div>
+
+      <div class="vehicle-options">
+
+        <button
+          class="vehicle-card active"
+          data-transmission="MT"
+          id="mtButton">
+
+          <div class="vehicle-icon">🚗</div>
+
+          <div class="vehicle-info">
+            <strong>SỐ SÀN</strong>
+            <span>MT • Côn • Phanh • Ga</span>
+          </div>
+
+          <div class="check">✓</div>
         </button>
-        <button class="car-card" data-mode="AT">
-          <span class="car-icon">🚙</span>
-          <b>SỐ TỰ ĐỘNG (AT)</b>
-          <small>Phanh • Ga • P-R-N-D</small>
+
+
+        <button
+          class="vehicle-card"
+          data-transmission="AT"
+          id="atButton">
+
+          <div class="vehicle-icon">🚙</div>
+
+          <div class="vehicle-info">
+            <strong>SỐ TỰ ĐỘNG</strong>
+            <span>AT • Phanh • Ga</span>
+          </div>
+
+          <div class="check">✓</div>
         </button>
-      </div>
-      <div class="notice">
-        <b>Bản thử nghiệm:</b> dùng sa hình 2D để luyện điều khiển.
-        Vô lăng xoay tự do 360°, camera cabin có góc trái/phải và gương.
-      </div>
-    </section>
 
-    <section id="game" class="screen">
-      <header class="hud">
-        <div><b id="modeLabel">MT</b><span id="lessonLabel"> • Bài 1: Xuất phát</span></div>
-        <div>⏱ <span id="timer">00:00</span></div>
-        <div>💯 <span id="score">100</span></div>
-        <div>❌ <span id="faults">0</span></div>
-        <button id="exitBtn" class="mini-btn">Thoát</button>
-      </header>
+      </div>
 
-      <div class="view-wrap">
-        <canvas id="scene" aria-label="Màn hình mô phỏng sa hình"></canvas>
-        <div class="camera-label" id="cameraLabel">CAM TRƯỚC</div>
-        <div class="mirrors">
-          <div class="mirror mirror-left"><span>GƯƠNG TRÁI</span><div id="mirrorLeft"></div></div>
-          <div class="mirror mirror-center"><span>GƯƠNG GIỮA</span><div id="mirrorCenter"></div></div>
-          <div class="mirror mirror-right"><span>GƯƠNG PHẢI</span><div id="mirrorRight"></div></div>
+
+      <!-- Chế độ -->
+      <div class="section-title">CHẾ ĐỘ</div>
+
+      <div class="mode-options">
+
+        <button
+          class="mode-button active"
+          data-mode="practice"
+          id="practiceButton">
+
+          <span class="mode-icon">🎯</span>
+
+          <span>
+            <strong>Luyện tập</strong>
+            <small>Không áp lực thời gian</small>
+          </span>
+
+        </button>
+
+
+        <button
+          class="mode-button"
+          data-mode="test"
+          id="testButton">
+
+          <span class="mode-icon">🏁</span>
+
+          <span>
+            <strong>Thi thử</strong>
+            <small>Tính điểm • tính lỗi • giới hạn thời gian</small>
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <button id="startGameButton" class="start-button">
+        <span>BẮT ĐẦU THI</span>
+        <b>→</b>
+      </button>
+
+
+      <div class="menu-note">
+        ⚠️ Đây là trò chơi mô phỏng luyện tập,
+        không thay thế đào tạo lái xe thực tế.
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       MÀN HÌNH GAME
+  ====================================================== -->
+  <div id="gameScreen" class="screen hidden">
+
+    <!-- ================= HUD ================= -->
+
+    <header class="game-header">
+
+      <div class="hud-brand">
+        🚘 <span>THI SÁT HÌNH</span>
+      </div>
+
+
+      <div class="hud-center">
+
+        <div class="hud-item">
+          <small>TỐC ĐỘ</small>
+          <strong>
+            <span id="speedValue">0</span>
+            <em>km/h</em>
+          </strong>
         </div>
-        <div id="message" class="message hidden"></div>
-      </div>
 
-      <div class="camera-buttons">
-        <button data-cam="front">👀 Trước</button>
-        <button data-cam="left">↖ Vai trái</button>
-        <button data-cam="right">↗ Vai phải</button>
-        <button data-cam="rear">🔙 Sau</button>
-        <button data-cam="top">🗺 Toàn cảnh</button>
-      </div>
 
-      <section class="controls">
-        <div class="pedals">
-          <button id="clutch" class="pedal clutch">CÔN</button>
-          <button id="brake" class="pedal brake">PHANH</button>
-          <button id="gas" class="pedal gas">GA</button>
+        <div class="hud-item">
+          <small>SỐ</small>
+          <strong id="gearValue">N</strong>
         </div>
 
-        <div class="steering-area">
-          <div id="steeringWheel" class="steering-wheel" aria-label="Vô lăng 360 độ">
-            <div class="wheel-ring"></div>
-            <div class="wheel-spoke s1"></div>
-            <div class="wheel-spoke s2"></div>
-            <div class="wheel-spoke s3"></div>
-            <div class="wheel-center">🚗</div>
+
+        <div class="hud-item rpm-box">
+          <small>RPM</small>
+          <strong id="rpmValue">800</strong>
+        </div>
+
+      </div>
+
+
+      <div class="hud-right">
+
+        <div class="hud-score">
+          <small>ĐIỂM</small>
+          <strong id="scoreValue">100</strong>
+        </div>
+
+        <div class="hud-fault">
+          <small>LỖI</small>
+          <strong id="faultValue">0</strong>
+        </div>
+
+        <div class="hud-time">
+          <small>THỜI GIAN</small>
+          <strong id="timeValue">--:--</strong>
+        </div>
+
+        <button
+          id="pauseButton"
+          class="icon-button"
+          aria-label="Tạm dừng">
+          ☰
+        </button>
+
+      </div>
+
+    </header>
+
+
+
+    <!-- ================= VIEWPORT ================= -->
+
+    <main class="driving-area">
+
+      <div id="viewport" class="viewport">
+
+        <!-- Canvas chính -->
+        <canvas id="gameCanvas"></canvas>
+
+
+        <!-- Khung cabin -->
+        <div class="cabin-overlay">
+
+          <!-- Kính trước -->
+          <div class="windshield-frame"></div>
+
+          <!-- Cột A trái -->
+          <div class="a-pillar left"></div>
+
+          <!-- Cột A phải -->
+          <div class="a-pillar right"></div>
+
+          <!-- Mép taplo -->
+          <div class="dashboard-edge"></div>
+
+        </div>
+
+
+        <!-- ================= GƯƠNG ================= -->
+
+        <div class="mirror mirror-left">
+
+          <div class="mirror-label">GƯƠNG TRÁI</div>
+
+          <canvas id="leftMirrorCanvas"></canvas>
+
+        </div>
+
+
+        <div class="mirror mirror-center">
+
+          <div class="mirror-label">GƯƠNG GIỮA</div>
+
+          <canvas id="centerMirrorCanvas"></canvas>
+
+        </div>
+
+
+        <div class="mirror mirror-right">
+
+          <div class="mirror-label">GƯƠNG PHẢI</div>
+
+          <canvas id="rightMirrorCanvas"></canvas>
+
+        </div>
+
+
+        <!-- ================= THÔNG BÁO ================= -->
+
+        <div id="gameMessage" class="game-message hidden">
+          <div class="message-icon">ℹ️</div>
+          <strong id="gameMessageTitle">Thông báo</strong>
+          <span id="gameMessageText"></span>
+        </div>
+
+
+        <!-- ================= CAMERA LABEL ================= -->
+
+        <div class="camera-label">
+          <span id="cameraLabel">CAM TRƯỚC</span>
+        </div>
+
+
+        <!-- ================= TÂM NHÌN ================= -->
+
+        <div id="lookIndicator" class="look-indicator">
+
+          <div class="look-dot"></div>
+
+        </div>
+
+
+        <!-- ================= CAMERA BUTTON ================= -->
+
+        <div class="camera-switcher">
+
+          <button
+            class="camera-button active"
+            data-camera="front">
+            <span>▣</span>
+            <small>TRƯỚC</small>
+          </button>
+
+
+          <button
+            class="camera-button"
+            data-camera="left">
+            <span>◀</span>
+            <small>VAI TRÁI</small>
+          </button>
+
+
+          <button
+            class="camera-button"
+            data-camera="right">
+            <span>▶</span>
+            <small>VAI PHẢI</small>
+          </button>
+
+
+          <button
+            class="camera-button"
+            data-camera="rear">
+            <span>↶</span>
+            <small>PHÍA SAU</small>
+          </button>
+
+
+          <button
+            class="camera-button"
+            data-camera="top">
+            <span>⌗</span>
+            <small>SA HÌNH</small>
+          </button>
+
+        </div>
+
+
+        <!-- ================= HƯỚNG DẪN KÉO ================= -->
+
+        <div class="drag-hint">
+          ↔ Kéo màn hình để quan sát xung quanh
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           KHU VỰC ĐIỀU KHIỂN
+      ================================================== -->
+
+      <section class="controls-area">
+
+
+        <!-- ================= VÔ LĂNG ================= -->
+
+        <div class="control-column steering-column">
+
+          <div class="control-title">
+            VÔ LĂNG
+            <span>360°</span>
           </div>
-          <div class="steer-readout">Vô lăng: <b id="steerValue">0°</b></div>
-          <button id="centerWheel" class="center-wheel">↩ Trả lái</button>
+
+          <div
+            id="steeringWheel"
+            class="steering-wheel">
+
+            <div class="wheel-ring">
+
+              <div class="wheel-spoke top"></div>
+
+              <div class="wheel-spoke left"></div>
+
+              <div class="wheel-spoke right"></div>
+
+              <div class="wheel-center">
+
+                <span>🚘</span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="steering-status">
+            Góc lái:
+            <strong id="steeringValue">0°</strong>
+          </div>
+
         </div>
 
-        <div class="gear-area">
-          <div id="mtGear" class="mt-gear">
-            <button data-gear="R">R</button><button data-gear="1">1</button>
-            <button data-gear="2">2</button><button data-gear="3">3</button>
-            <button data-gear="4">4</button><button data-gear="5">5</button>
-            <div class="gear-now">Số <b id="gearLabel">N</b></div>
+
+
+        <!-- ================= PEDAL ================= -->
+
+        <div class="control-column pedals-column">
+
+          <div class="control-title">
+            BÀN ĐẠP
           </div>
-          <div id="atGear" class="at-gear hidden">
-            <button data-gear="P">P</button><button data-gear="R">R</button>
-            <button data-gear="N">N</button><button data-gear="D">D</button>
-            <div class="gear-now">Số <b id="gearLabelAT">P</b></div>
+
+
+          <div class="pedals">
+
+            <!-- Côn chỉ dùng MT -->
+            <button
+              id="clutchPedal"
+              class="pedal clutch-pedal">
+
+              <div class="pedal-top"></div>
+
+              <strong>CÔN</strong>
+
+              <small>CLUTCH</small>
+
+            </button>
+
+
+            <button
+              id="brakePedal"
+              class="pedal brake-pedal">
+
+              <div class="pedal-top"></div>
+
+              <strong>PHANH</strong>
+
+              <small>BRAKE</small>
+
+            </button>
+
+
+            <button
+              id="acceleratorPedal"
+              class="pedal accelerator-pedal">
+
+              <div class="pedal-top"></div>
+
+              <strong>GA</strong>
+
+              <small>ACCEL</small>
+
+            </button>
+
           </div>
+
         </div>
+
+
+
+        <!-- ================= CẦN SỐ ================= -->
+
+        <div class="control-column gear-column">
+
+          <div class="control-title">
+            CẦN SỐ
+            <span id="transmissionLabel">SỐ SÀN</span>
+          </div>
+
+
+          <!-- MT -->
+
+          <div id="manualGearPanel" class="gear-panel manual">
+
+            <button data-gear="R">R</button>
+
+            <button data-gear="1">1</button>
+
+            <button data-gear="2">2</button>
+
+            <button data-gear="3">3</button>
+
+            <button data-gear="4">4</button>
+
+            <button data-gear="5">5</button>
+
+            <button
+              data-gear="N"
+              class="gear-neutral active">
+              N
+            </button>
+
+          </div>
+
+
+          <!-- AT -->
+
+          <div
+            id="automaticGearPanel"
+            class="gear-panel automatic hidden">
+
+            <button data-gear="P">P</button>
+
+            <button data-gear="R">R</button>
+
+            <button
+              data-gear="N"
+              class="active">
+              N
+            </button>
+
+            <button data-gear="D">D</button>
+
+          </div>
+
+
+          <div class="gear-help">
+            <span id="gearHelpText">
+              Đạp côn để chuyển số
+            </span>
+          </div>
+
+        </div>
+
+
       </section>
-      <div class="help">Điện thoại: kéo trực tiếp vô lăng • PC: A/D hoặc ←/→ • W/S ga/phanh</div>
-    </section>
-  </main>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         TASK BAR
+    ====================================================== -->
+
+    <footer class="task-bar">
+
+      <div class="task-current">
+
+        <div class="task-number">
+          <span id="taskNumber">01</span>
+        </div>
+
+        <div class="task-info">
+
+          <small>BÀI THI HIỆN TẠI</small>
+
+          <strong id="taskTitle">
+            Xuất phát
+          </strong>
+
+          <span id="taskDescription">
+            Thắt dây an toàn và bắt đầu di chuyển.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="task-progress">
+
+        <div class="progress-text">
+          <span>TIẾN ĐỘ</span>
+          <strong>
+            <span id="taskProgressValue">1</span>/10
+          </strong>
+        </div>
+
+        <div class="progress-track">
+          <div
+            id="taskProgressBar"
+            class="progress-fill">
+          </div>
+        </div>
+
+      </div>
+
+
+      <button
+        id="exitGameButton"
+        class="exit-button">
+        THOÁT
+      </button>
+
+    </footer>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       PAUSE MENU
+  ====================================================== -->
+
+  <div
+    id="pauseOverlay"
+    class="overlay hidden">
+
+    <div class="pause-card">
+
+      <div class="pause-icon">Ⅱ</div>
+
+      <h2>ĐANG TẠM DỪNG</h2>
+
+      <p>
+        Bài thi của bạn đang được giữ nguyên.
+      </p>
+
+      <button
+        id="resumeButton"
+        class="primary-button">
+        TIẾP TỤC
+      </button>
+
+      <button
+        id="restartButton"
+        class="secondary-button">
+        THI LẠI
+      </button>
+
+      <button
+        id="menuButton"
+        class="text-button">
+        VỀ MENU
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       KẾT QUẢ
+  ====================================================== -->
+
+  <div
+    id="resultOverlay"
+    class="overlay hidden">
+
+    <div class="result-card">
+
+      <div class="result-icon">
+        🏁
+      </div>
+
+      <div class="result-label">
+        KẾT QUẢ BÀI THI
+      </div>
+
+      <h2 id="resultTitle">
+        HOÀN THÀNH
+      </h2>
+
+
+      <div class="final-score">
+
+        <span>ĐIỂM</span>
+
+        <strong id="finalScore">
+          100
+        </strong>
+
+        <small>/ 100</small>
+
+      </div>
+
+
+      <div class="result-stats">
+
+        <div>
+          <span>Thời gian</span>
+          <strong id="finalTime">00:00</strong>
+        </div>
+
+        <div>
+          <span>Số lỗi</span>
+          <strong id="finalFaults">0</strong>
+        </div>
+
+        <div>
+          <span>Bài đã hoàn thành</span>
+          <strong id="finalTasks">10/10</strong>
+        </div>
+
+      </div>
+
+
+      <div
+        id="resultMessage"
+        class="result-message">
+        Bạn đã hoàn thành bài thi.
+      </div>
+
+
+      <button
+        id="retryButton"
+        class="primary-button">
+        THI LẠI
+      </button>
+
+
+      <button
+        id="resultMenuButton"
+        class="secondary-button">
+        VỀ MENU
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       THÔNG BÁO LỖI
+  ====================================================== -->
+
+  <div
+    id="faultToast"
+    class="fault-toast hidden">
+
+    <div class="fault-icon">
+      !
+    </div>
+
+    <div>
+
+      <strong id="faultTitle">
+        LỖI
+      </strong>
+
+      <span id="faultText">
+        Phát hiện lỗi.
+      </span>
+
+    </div>
+
+    <b id="faultPenalty">
+      -5
+    </b>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       HƯỚNG DẪN PHÍM
+  ====================================================== -->
+
+  <div
+    id="keyboardHelp"
+    class="keyboard-help hidden">
+
+    <div class="keyboard-card">
+
+      <h3>ĐIỀU KHIỂN BÀN PHÍM</h3>
+
+      <div class="keyboard-row">
+        <kbd>W</kbd>
+        <span>Ga</span>
+      </div>
+
+      <div class="keyboard-row">
+        <kbd>S</kbd>
+        <span>Phanh</span>
+      </div>
+
+      <div class="keyboard-row">
+        <kbd>A</kbd>
+        <span>Đánh lái trái</span>
+      </div>
+
+      <div class="keyboard-row">
+        <kbd>D</kbd>
+        <span>Đánh lái phải</span>
+      </div>
+
+      <div class="keyboard-row">
+        <kbd>Space</kbd>
+        <span>Phanh</span>
+      </div>
+
+      <button
+        id="closeKeyboardHelp"
+        class="primary-button">
+        ĐÓNG
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       SCRIPT
+  ====================================================== -->
+
   <script src="script.js"></script>
+
 </body>
 </html>
