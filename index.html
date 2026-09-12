@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#10151c">
+  <title>Thi Sa Hình Ô Tô - MT & AT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <section id="menu" class="screen active">
+      <div class="brand">🚗 THI SA HÌNH Ô TÔ</div>
+      <p class="sub">Mô phỏng luyện tập MT & AT • Bản 1</p>
+      <div class="car-select">
+        <button class="car-card" data-mode="MT">
+          <span class="car-icon">🚘</span>
+          <b>SỐ SÀN (MT)</b>
+          <small>Côn • Phanh • Ga • 1-5 • R</small>
+        </button>
+        <button class="car-card" data-mode="AT">
+          <span class="car-icon">🚙</span>
+          <b>SỐ TỰ ĐỘNG (AT)</b>
+          <small>Phanh • Ga • P-R-N-D</small>
+        </button>
+      </div>
+      <div class="notice">
+        <b>Bản thử nghiệm:</b> dùng sa hình 2D để luyện điều khiển.
+        Vô lăng xoay tự do 360°, camera cabin có góc trái/phải và gương.
+      </div>
+    </section>
+
+    <section id="game" class="screen">
+      <header class="hud">
+        <div><b id="modeLabel">MT</b><span id="lessonLabel"> • Bài 1: Xuất phát</span></div>
+        <div>⏱ <span id="timer">00:00</span></div>
+        <div>💯 <span id="score">100</span></div>
+        <div>❌ <span id="faults">0</span></div>
+        <button id="exitBtn" class="mini-btn">Thoát</button>
+      </header>
+
+      <div class="view-wrap">
+        <canvas id="scene" aria-label="Màn hình mô phỏng sa hình"></canvas>
+        <div class="camera-label" id="cameraLabel">CAM TRƯỚC</div>
+        <div class="mirrors">
+          <div class="mirror mirror-left"><span>GƯƠNG TRÁI</span><div id="mirrorLeft"></div></div>
+          <div class="mirror mirror-center"><span>GƯƠNG GIỮA</span><div id="mirrorCenter"></div></div>
+          <div class="mirror mirror-right"><span>GƯƠNG PHẢI</span><div id="mirrorRight"></div></div>
+        </div>
+        <div id="message" class="message hidden"></div>
+      </div>
+
+      <div class="camera-buttons">
+        <button data-cam="front">👀 Trước</button>
+        <button data-cam="left">↖ Vai trái</button>
+        <button data-cam="right">↗ Vai phải</button>
+        <button data-cam="rear">🔙 Sau</button>
+        <button data-cam="top">🗺 Toàn cảnh</button>
+      </div>
+
+      <section class="controls">
+        <div class="pedals">
+          <button id="clutch" class="pedal clutch">CÔN</button>
+          <button id="brake" class="pedal brake">PHANH</button>
+          <button id="gas" class="pedal gas">GA</button>
+        </div>
+
+        <div class="steering-area">
+          <div id="steeringWheel" class="steering-wheel" aria-label="Vô lăng 360 độ">
+            <div class="wheel-ring"></div>
+            <div class="wheel-spoke s1"></div>
+            <div class="wheel-spoke s2"></div>
+            <div class="wheel-spoke s3"></div>
+            <div class="wheel-center">🚗</div>
+          </div>
+          <div class="steer-readout">Vô lăng: <b id="steerValue">0°</b></div>
+          <button id="centerWheel" class="center-wheel">↩ Trả lái</button>
+        </div>
+
+        <div class="gear-area">
+          <div id="mtGear" class="mt-gear">
+            <button data-gear="R">R</button><button data-gear="1">1</button>
+            <button data-gear="2">2</button><button data-gear="3">3</button>
+            <button data-gear="4">4</button><button data-gear="5">5</button>
+            <div class="gear-now">Số <b id="gearLabel">N</b></div>
+          </div>
+          <div id="atGear" class="at-gear hidden">
+            <button data-gear="P">P</button><button data-gear="R">R</button>
+            <button data-gear="N">N</button><button data-gear="D">D</button>
+            <div class="gear-now">Số <b id="gearLabelAT">P</b></div>
+          </div>
+        </div>
+      </section>
+      <div class="help">Điện thoại: kéo trực tiếp vô lăng • PC: A/D hoặc ←/→ • W/S ga/phanh</div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
